@@ -9,8 +9,9 @@
   </head>
 
 <body>
-<a href="doc1.pdf">Download File</div>
+<a class="fileDownloadPromise" href="doc1.pdf">Download File</div>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+      <script src="download.js"></script>
 
       <script type="text/javascript">
          $(document).ready(function () {
@@ -22,6 +23,23 @@
 //
 
          });
+         //
+// Simple rich user experience - jquery.fileDownload.js & jQuery UI Dialog
+// uses the optional "options" argument
+//
+//      the below uses jQuery "on" http://api.jquery.com/on/ (jQuery 1.7 + required, otherwise use "delegate" or "live") so that any
+//      <a class="fileDownload..."/> that is ever loaded into an Ajax site will automatically use jquery.fileDownload.js
+//      if you are using "on":
+//          you should generally be able to reduce the scope of the selector below "document" but it is used in this example so it
+//          works for possible dynamic manipulation in the entire DOM
+//
+$(document).on("click", "a.fileDownloadPromise", function () {
+    $.fileDownload($(this).prop('href'))
+        .done(function () { alert('File download a success!'); })
+        .fail(function () { alert('File download failed!'); });
+
+    return false; //this is critical to stop the click event which will trigger a normal file download
+});
       </script>
 
 
